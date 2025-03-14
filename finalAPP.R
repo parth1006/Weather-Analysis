@@ -1,3 +1,4 @@
+install.packages(c("openmeteo","ggplot2","dplyr","plotly","tidyr","lubridate","tidygeocoder","shiny","jsonlite","markdown","httr"))
 library(shiny)
 library(openmeteo)
 library(ggplot2)
