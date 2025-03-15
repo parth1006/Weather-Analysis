@@ -46,7 +46,13 @@ This interactive **Shiny app** provides comprehensive **historical weather analy
 - **tidyverse** for data processing.
 - **API Integration** for fetching real-time weather data.
 - **AI Models** for generating weather insights and recommendations.
-
+## Installation
+** 1 Clone the repo**
+git clone https://github.com/parth1006/Weather-Analysis.git
+cd Weather-Analysis
+** 2 Run the Shiny app**
+library(shiny)
+runApp("finalAPP.R")
 ## 📷 Screenshots
 - **Home Screen**
 ![image](https://github.com/user-attachments/assets/3a309e43-4a00-41f0-ba92-628d2362f3e1)
