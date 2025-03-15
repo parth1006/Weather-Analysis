@@ -66,7 +66,7 @@ shiny::runApp()
 ```
 Alternatively, if the app is structured in a separate `app.R` file, use:
 ```r
-Rscript app.R
+Rscript finalAPP.R
 ```
 ## 📷 Screenshots
 - **Home Screen**
