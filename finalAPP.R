@@ -78,7 +78,6 @@ get_weather_forecast_with_analysis <- function(city, days_ahead) {
   }
   weather_data$date <- as.Date(weather_data$date)
   forecasted_data <- weather_data %>%
-    filter(date > Sys.Date()) %>% 
     rename(
       "Date" = date,
       "Max Temp (°C)" = daily_temperature_2m_max,
@@ -86,13 +85,15 @@ get_weather_forecast_with_analysis <- function(city, days_ahead) {
       "Daylight (hours)" = daily_daylight_duration,
       "Rainfall (mm)" = daily_rain_sum
     )
-  forecast_summary <- forecasted_data %>%
+  future_only_data <- forecasted_data %>% filter(Date > Sys.Date())
+  
+  forecast_summary <- future_only_data %>%
     summarise(
-      `Average Temperature (°C)` = mean((forecasted_data$`Max Temp (°C)` + forecasted_data$`Min Temp (°C)`) / 2, na.rm = TRUE),
-      `Maximum Temperature (°C)` = max(forecasted_data$`Max Temp (°C)`, na.rm = TRUE),
-      `Minimum Temperature (°C)` = min(forecasted_data$`Min Temp (°C)`, na.rm = TRUE),
-      `Maximum Wind Speed (m/s)` = 0, # Not in forecast data, placeholder
-      `Total Rainfall (mm)` = sum(forecasted_data$`Rainfall (mm)`, na.rm = TRUE)
+      `Average Temperature (°C)` = mean((`Max Temp (°C)` + `Min Temp (°C)`) / 2, na.rm = TRUE),
+      `Maximum Temperature (°C)` = max(`Max Temp (°C)`, na.rm = TRUE),
+      `Minimum Temperature (°C)` = min(`Min Temp (°C)`, na.rm = TRUE),
+      `Maximum Wind Speed (m/s)` = 0, # Placeholder
+      `Total Rainfall (mm)` = sum(`Rainfall (mm)`, na.rm = TRUE)
     )
   ai_analysis <- get_ai_analysis(forecast_summary)
   if ("daily_daylight_duration" %in% colnames(weather_data)) {
@@ -135,6 +136,7 @@ get_weather_forecast_with_analysis <- function(city, days_ahead) {
   }
   
   return(list(data = forecasted_data, plot = fig, analysis = ai_analysis))
+  
 }
 
 get_weather_summary_with_analysis <- function(city, start_date, end_date) {
